@@ -1,0 +1,107 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackateam</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    <title>Bootstrap Tutorial Sample Page</title>
+    <link rel="stylesheet" href="Bootstrap/style.css">
+    <link rel="stylesheet" href="signin_up.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Ubuntu" rel="stylesheet"> 
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md">
+        <div class="navbar-brand">Hackateam</div>
+        <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="main-navigation">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="index.html" id="logout">Sign out</a>
+              </li>
+          </ul>
+        </div>
+    </nav>
+    <header class="page-header header container-fluid">
+        <div class="overlay"></div>
+        <div class="outerbox">
+            <h1>DragonHacks</h1>
+            <input type="text" id="uname" placeholder="Name">
+            <input type="text" id="uuniversity" placeholder="University">
+            <input type="text" id="uskills" placeholder="Specialties">
+            <input type="text" id="urole" placeholder="Prefered role">
+            <input type="submit" onclick="Ulog()" value="Find your team">
+        </div>
+    </header>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+<!--    <section>
+    <div class="box">
+        <h1>Sign up for event</h1>
+        <input type="text" id="uname" placeholder="Name">
+        <input type="text" id="urole" placeholder="Role">
+        <input type="text" id="uskills" placeholder="Skills">
+        <input type="text" id="uuniversity" placeholder="University">
+        <input type="submit" onclick="Ulog()" value="Find your team">
+    </div>
+-->
+   <!-- The core Firebase JS SDK is always required and must be listed first -->
+   <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-firestore.js"></script>
+
+   <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+   <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
+
+   <script>
+     // Your web app's Firebase configuration
+     var firebaseConfig = {
+       apiKey: "AIzaSyCU39Ta1HE6W76vmWWrbYhtwdCJ2BQFRuw",
+       authDomain: "hackathonmatchuser-ae625.firebaseapp.com",
+       databaseURL: "https://hackathonmatchuser-ae625.firebaseio.com",
+       projectId: "hackathonmatchuser-ae625",
+       storageBucket: "hackathonmatchuser-ae625.appspot.com",
+       messagingSenderId: "214192263433",
+       appId: "1:214192263433:web:ff6f9790fa5db1670983d8",
+       measurementId: "G-3ZXZFWX2BJ"
+     };
+     // Initialize Firebase
+     firebase.initializeApp(firebaseConfig);
+     firebase.analytics();
+       let firestore = firebase.firestore();
+       console.log("Cloud Firestores Loaded");
+
+   function Ulog(){
+       //Saving data
+       const UName = document.getElementById('uname');
+       const URole = document.getElementById('urole');
+       const USkills = document.getElementById('uskills');
+       const UUniversity = document.getElementById('uuniversity')
+       console.log(uname.value, urole.value, uskills.value, uskills.value, uuniversity.value);
+       firestore.collection("Users").add({
+           Name:UName.value,
+           Role:URole.value,
+           Skills:USkills.value,
+           University: UUniversity.value
+       })
+       .then(function(){
+           console.log("Document successfully written!");
+       })
+       .catch(function(error){
+           console.error("Error writing document: ", error);
+       })
+   }
+   
+</script>
+</section>
+</body>
+</html>

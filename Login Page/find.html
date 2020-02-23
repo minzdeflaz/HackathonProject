@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mainpages.css">
+    <title>Hackateam</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Ubuntu" rel="stylesheet"> 
+    <style>
+        a { color: #FFFFFF; } 
+    </style>
+</head>
+<body>
+    <section>
+        <div>
+            <div class='navbar'>
+                <div class='logo'>
+                HACKATEAM |
+                </div>           
+                <div class='navbar-item'>
+                    <nav>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href='event.html'>Event</a></li>
+                            <li><a href="login.html">Sign Out</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+<div class="box">
+    <div>
+            <input type="submit" onclick="randomize()" value="Find your teammates">
+        </div>
+    </div>
+    </section>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
+   <!-- The core Firebase JS SDK is always required and must be listed first -->
+   <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-firestore.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-auth.js"></script>
+
+   <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+   <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
+
+   <script>
+   // Your web app's Firebase configuration
+   var firebaseConfig = {
+       apiKey: "AIzaSyCU39Ta1HE6W76vmWWrbYhtwdCJ2BQFRuw",
+       authDomain: "hackathonmatchuser-ae625.firebaseapp.com",
+       databaseURL: "https://hackathonmatchuser-ae625.firebaseio.com",
+       projectId: "hackathonmatchuser-ae625",
+       storageBucket: "hackathonmatchuser-ae625.appspot.com",
+       messagingSenderId: "214192263433",
+       appId: "1:214192263433:web:ff6f9790fa5db1670983d8",
+       measurementId: "G-3ZXZFWX2BJ"
+   };
+   // Initialize Firebase
+   firebase.initializeApp(firebaseConfig);
+   firebase.analytics();
+       let firestore = firebase.firestore();
+       let fireauth = firebase.auth();
+       console.log("Cloud Firestores Loaded");
+      
+      async function randomize(){
+        var UserRef = firestore.collection("event").doc("TC83YxJsA4IWDhYfVStP").collection("User");
+        UserRef.orderBy("UserID").limit(3)
+        console.log(UserRef);
+        var fruits = [];
+        // var count = 0;
+        await firestore.collection("event").doc("TC83YxJsA4IWDhYfVStP").collection("User").get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                // console.log(doc.id, " => ", doc.data());
+                // console.log(doc.data());
+                // fruits[count] = doc.data();
+                // count++;
+                fruits.push(doc.data());
+            });
+        });
+        console.log(fruits.length);
+        var random_fruits = [];
+        var random_fruit = Math.floor(Math.random() * fruits.length);
+        console.log(random_fruit)
+        while (random_fruits.length < 3) {
+          if (random_fruits.includes(random_fruit) == true) {
+            random_fruit = Math.floor(Math.random() * fruits.length);
+            // console.log('Hello')
+          } else {
+            random_fruits.push(random_fruit)
+            console.log(fruits[random_fruit])
+          }
+          // random_fruits.push(random_fruit);
+        }
+        console.log(random_fruits.length)
+        console.log(random_fruits)
+        document.write("<h1>"+"These are your team member:"+"</h1>")
+        for (a = 0; a < random_fruits.length; a++){
+          console.log(fruits[random_fruits[a]])
+          document.write("<b>"+ (a+1) + " team member'name: " + "</b>"+ fruits[random_fruits[a]].Name+"<br/>");
+          document.write("<b>" + "Member's role: " + "</b>" + fruits[random_fruits[a]].Role+"<br/>");
+          document.write("<b>"+"Member's skills: " + "</b>" + fruits[random_fruits[a]].Skills+"<br/>")
+          document.write("<b>"+"Member's University: "+ "</b>" + fruits[random_fruits[a]].University+"<br/>")
+          document.write("<br/>")
+          
+        }
+
+      };
+
+</script>
+</body>
+</html>

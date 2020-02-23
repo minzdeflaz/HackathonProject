@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mainpages.css">
+    <title>Hackateam</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Ubuntu" rel="stylesheet"> 
+    <style>
+        a { color: #FFFFFF; } 
+    </style>
+</head>
+<body>
+    <section>
+        <div>
+            <div class='navbar'>
+                <div class='logo'>
+                HACKATEAM |
+                </div>           
+                <div class='navbar-item'>
+                    <nav>
+                        <ul>
+                            <li><a href="homepage.html">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="find.html">Find teammates</a></li>
+                            <li><a href='event.html'>Event</a></li>
+                            <li><a href="login.html">Sign Out</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+    <div class="box">
+    <h1 class="name">Event</h1>
+    <div>
+        <input id="eventName" type="text" placeholder="Name of the Event"/>
+    </div>
+    <div>
+        <input id="eventDate" type="date"/>
+    </div>
+    <div>
+        <input id="eventTime" type="time"/>
+    </div>
+    <div>
+        <button onclick="retriveid()">Create Event</button>
+    </div>
+    </div>
+    
+</section>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-auth.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCU39Ta1HE6W76vmWWrbYhtwdCJ2BQFRuw",
+        authDomain: "hackathonmatchuser-ae625.firebaseapp.com",
+        databaseURL: "https://hackathonmatchuser-ae625.firebaseio.com",
+        projectId: "hackathonmatchuser-ae625",
+        storageBucket: "hackathonmatchuser-ae625.appspot.com",
+        messagingSenderId: "214192263433",
+        appId: "1:214192263433:web:ff6f9790fa5db1670983d8",
+        measurementId: "G-3ZXZFWX2BJ"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+        let firestore = firebase.firestore();
+        let fireauth = firebase.auth();
+        console.log("Cloud Firestores Loaded");
+        let eventID = firestore.collection("event").doc().id;
+        
+    function retriveid(){
+        fireauth.onAuthStateChanged(function(user) {
+        if (user) {
+            var user = fireauth.currentUser;
+    
+        if (user != null) {
+        user.providerData.forEach(function () {
+            console.log("  Provider-specific UID: " + user.uid);
+            const EName = document.getElementById('eventName');
+            const EDate = document.getElementById('eventDate');
+            const ETime = document.getElementById('eventTime');
+            console.log(EName.value, EDate.value, ETime.value, user.uid, eventID);
+            firestore.collection("event").doc(eventID).set({
+                HostID: user.uid,
+                name_event:EName.value,
+                date_event:EDate.value,
+                time_event:ETime.value
+            })
+            .then(function(){
+                console.log("Document successfully written!");
+            })
+            .catch(function(error){
+                console.error("Error writing document: ", error);
+            })
+        });
+}
+  } else {
+    // No user is signed in.
+    console.log("not yet log in")
+  }
+});
+    }
+</script>
+
+</body>
+</html>
